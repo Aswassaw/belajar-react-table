@@ -1,10 +1,10 @@
 import "./table.css";
 import React, { useMemo } from "react";
-import { useTable } from "react-table";
+import { useTable, useSortBy } from "react-table";
 import MOCK_DATA from "./MOCK_DATA.json";
 import { COLUMNS, GROUP_COLUMS } from "./columns";
 
-const BasicTable = () => {
+const SortingTable = () => {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
 
@@ -15,14 +15,13 @@ const BasicTable = () => {
     footerGroups,
     rows,
     prepareRow,
-  } = useTable({
-    columns,
-    data,
-  });
-
-  console.log(headerGroups);
-  console.log(footerGroups);
-  console.log(rows);
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useSortBy
+  );
 
   return (
     <div>
@@ -33,15 +32,33 @@ const BasicTable = () => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render("Header")}
+                  <span>
+                    {column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <>
+                          {" "}
+                          <i class='fas fa-long-arrow-alt-down'></i>
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <i class='fas fa-long-arrow-alt-up'></i>
+                        </>
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </th>
               ))}
             </tr>
           ))}
         </thead>
         {/* Tbody */}
         <tbody {...getTableBodyProps()}>
-          {
-          rows.map((row) => {
+          {rows.map((row) => {
             prepareRow(row);
 
             return (
@@ -69,4 +86,4 @@ const BasicTable = () => {
   );
 };
 
-export default BasicTable;
+export default SortingTable;
