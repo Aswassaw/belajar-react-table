@@ -1,8 +1,8 @@
 import "./table.css";
 import React, { useMemo } from "react";
-import { useTable, useSortBy, useGlobalFilter } from "react-table";
+import { useTable, useSortBy, useGlobalFilter, useFilters } from "react-table";
 import MOCK_DATA from "./MOCK_DATA.json";
-import { COLUMNS, GROUP_COLUMS } from "./columns";
+import { COLUMNS } from "./columns";
 import { GlobalFilter } from "./GlobalFilter";
 
 const FilteringTable = () => {
@@ -23,8 +23,9 @@ const FilteringTable = () => {
       columns,
       data,
     },
+    useFilters,
     useGlobalFilter,
-    useSortBy,
+    useSortBy
   );
 
   const { globalFilter } = state;
@@ -38,30 +39,39 @@ const FilteringTable = () => {
           {/* Thead */}
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    {column.render("Header")}
-                    <span>
-                      {column.isSorted ? (
-                        column.isSortedDesc ? (
-                          <>
-                            {" "}
-                            <i class='fas fa-long-arrow-alt-down'></i>
-                          </>
+              <>
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                    >
+                      {column.render("Header")}
+                      <span>
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <>
+                              {" "}
+                              <i class='fas fa-long-arrow-alt-down'></i>
+                            </>
+                          ) : (
+                            <>
+                              {" "}
+                              <i class='fas fa-long-arrow-alt-up'></i>
+                            </>
+                          )
                         ) : (
-                          <>
-                            {" "}
-                            <i class='fas fa-long-arrow-alt-up'></i>
-                          </>
-                        )
-                      ) : (
-                        ""
-                      )}
-                    </span>
-                  </th>
-                ))}
-              </tr>
+                          ""
+                        )}
+                      </span>
+                    </th>
+                  ))}
+                </tr>
+                <tr>
+                  {headerGroup.headers.map((column) => (
+                    <th>{column.canFilter && column.render("Filter")}</th>
+                  ))}
+                </tr>
+              </>
             ))}
           </thead>
           {/* Tbody */}

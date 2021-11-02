@@ -18,10 +18,44 @@ table tr:hover {
   background-color: #ddd;
 }
 
-table th, tfoot td {
+table th,
+tfoot td {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
   background-color: #04aa6d;
   color: white;
+}
+
+.form-label {
+  font-weight: bold;
+  text-align: right;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  display: block;
+  margin: 0 auto;
+  max-width: 150px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #555;
+  background-color: #fff;
+  background-position: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button {
+  margin-top: 20px;
+  padding: 10px;
+  outline: none;
+  border: none;
+  background-color: rgb(36, 114, 187);
+  font-weight: bold;
+  color: white;
+  margin-right: 5px;
+  cursor: pointer;
 }
