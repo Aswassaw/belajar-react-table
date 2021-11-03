@@ -2,7 +2,7 @@ import "../../table.css";
 import React, { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import MOCK_DATA from "../../MOCK_DATA.json";
-import { COLUMNS, GROUP_COLUMS } from "../../columns";
+import { COLUMNS } from "../../columns";
 
 const SortingTable = () => {
   const columns = useMemo(() => COLUMNS, []);
