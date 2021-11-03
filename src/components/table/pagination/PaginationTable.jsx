@@ -32,6 +32,8 @@ const FilteringTable = () => {
     canNextPage,
     canPreviousPage,
     pageOptions,
+    gotoPage,
+    pageCount,
     prepareRow,
     state,
     setGlobalFilter,
@@ -112,27 +114,56 @@ const FilteringTable = () => {
             })}
           </tbody>
         </table>
-        <div style={{ marginTop: "5px" }}>
-          <p>
+        <div style={{marginTop: "5px"}}>
+        <span>
             Page{" "}
             <strong>
               {pageIndex + 1} of {pageOptions.length}
             </strong>
-          </p>
+        </span>
+        <span>
+          {" "} | Go to page:{" "}
+          <input
+            style={{ width: "50px" }}
+            type='number'
+            defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              const pageNumber = e.target.value
+                ? Number(e.target.value) - 1
+                : 0;
+              gotoPage(pageNumber);
+            }}
+          />
+        </span>
         </div>
+        <br />
         <button
-          className='button'
+          className={`button ${!canPreviousPage ? "disabled" : ""}`}
+          onClick={() => gotoPage(0)}
+          disabled={!canPreviousPage}
+        >
+          First
+        </button>
+        <button
+          className={`button ${!canPreviousPage ? "disabled" : ""}`}
           onClick={() => previousPage()}
           disabled={!canPreviousPage}
         >
           Previous
         </button>
         <button
-          className='button'
+          className={`button ${!canNextPage ? "disabled" : ""}`}
           onClick={() => nextPage()}
           disabled={!canNextPage}
         >
           Next
+        </button>
+        <button
+          className={`button ${!canNextPage ? "disabled" : ""}`}
+          onClick={() => gotoPage(pageCount - 1)}
+          disabled={!canNextPage}
+        >
+          Last
         </button>
       </div>
     </>

@@ -58,3 +58,8 @@ tfoot td {
   margin-right: 5px;
   cursor: pointer;
 }
+
+.disabled {
+  background-color: rgb(53, 95, 134);
+  cursor: not-allowed;
+}
