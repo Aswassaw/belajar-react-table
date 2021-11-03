@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import { useAsyncDebounce } from "react-table";
 
 export const GlobalFilter = ({ filter, setFilter }) => {
+  const [value, setValue] = useState(filter);
+
+  const onChange = useAsyncDebounce((value) => {
+    setFilter(value || undefined);
+  }, 600);
+
   return (
     <span>
       <label className='form-label' htmlFor='globalSearch'>
@@ -9,9 +16,12 @@ export const GlobalFilter = ({ filter, setFilter }) => {
       <input
         id='globalSearch'
         type='text'
-        value={filter || ""}
+        value={value || ""}
         className='form-input'
-        onChange={(e) => setFilter(e.target.value)}
+        onChange={(e) => {
+          setValue(e.target.value);
+          onChange(e.target.value.trim());
+        }}
       />
     </span>
   );
