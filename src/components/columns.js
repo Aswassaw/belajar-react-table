@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import { ColumnFilter } from "./table/filter/ColumnFilter";
 
 export const COLUMNS = [
   {
