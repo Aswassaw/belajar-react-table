@@ -46,12 +46,12 @@ const FilteringTable = () => {
         <table {...getTableProps()}>
           {/* Thead */}
           <thead>
-            {headerGroups.map((headerGroup) => (
-              <Fragment key={(Math.random() + 1).toString(36).substring(7)}>
+            {headerGroups.map((headerGroup, index) => (
+              <Fragment key={headerGroup.headers[index].Header}>
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column) => (
                     <th
-                      key={(Math.random() + 1).toString(36).substring(7)}
+                      key={column.id}
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                     >
                       {column.render("Header")}
@@ -77,7 +77,7 @@ const FilteringTable = () => {
                 </tr>
                 <tr>
                   {headerGroup.headers.map((column) => (
-                    <th key={(Math.random() + 1).toString(36).substring(7)}>
+                    <th key={column.id}>
                       {column.canFilter && column.render("Filter")}
                     </th>
                   ))}
