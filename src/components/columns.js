@@ -3,11 +3,21 @@ import { ColumnFilter } from "./ColumnFilter";
 
 export const COLUMNS = [
   {
-    Header: "Id",
-    Footer: "Id",
-    accessor: "id",
+    Header: "No",
+    Cell: (row) => {
+        return <div>{parseInt(row.row.id) + 1}</div>;
+    },
+    disableSortBy: true,
     disableFilters: true,
+    disableGlobalFilter: true,
   },
+  // {
+  //   Header: "Id",
+  //   Footer: "Id",
+  //   accessor: "id",
+  //   disableFilters: true,
+  //   disableGlobalFilter: true,
+  // },
   {
     Header: "First Name",
     Footer: "First Name",

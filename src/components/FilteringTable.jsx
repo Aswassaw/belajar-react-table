@@ -1,5 +1,5 @@
 import "./table.css";
-import React, { useMemo } from "react";
+import React, { Fragment, useMemo } from "react";
 import { useTable, useSortBy, useGlobalFilter, useFilters } from "react-table";
 import MOCK_DATA from "./MOCK_DATA.json";
 import { COLUMNS } from "./columns";
@@ -47,10 +47,11 @@ const FilteringTable = () => {
           {/* Thead */}
           <thead>
             {headerGroups.map((headerGroup) => (
-              <>
+              <Fragment key={(Math.random() + 1).toString(36).substring(7)}>
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column) => (
                     <th
+                      key={(Math.random() + 1).toString(36).substring(7)}
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                     >
                       {column.render("Header")}
@@ -59,12 +60,12 @@ const FilteringTable = () => {
                           column.isSortedDesc ? (
                             <>
                               {" "}
-                              <i class='fas fa-long-arrow-alt-down'></i>
+                              <i className='fas fa-long-arrow-alt-down'></i>
                             </>
                           ) : (
                             <>
                               {" "}
-                              <i class='fas fa-long-arrow-alt-up'></i>
+                              <i className='fas fa-long-arrow-alt-up'></i>
                             </>
                           )
                         ) : (
@@ -76,10 +77,12 @@ const FilteringTable = () => {
                 </tr>
                 <tr>
                   {headerGroup.headers.map((column) => (
-                    <th>{column.canFilter && column.render("Filter")}</th>
+                    <th key={(Math.random() + 1).toString(36).substring(7)}>
+                      {column.canFilter && column.render("Filter")}
+                    </th>
                   ))}
                 </tr>
-              </>
+              </Fragment>
             ))}
           </thead>
           {/* Tbody */}
