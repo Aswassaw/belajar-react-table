@@ -1,7 +1,7 @@
 import "./App.css";
-// import BasicTable from "./components/BasicTable";
-// import SortingTable from "./components/SortingTable";
-import FilteringTable from "./components/FilteringTable";
+// import BasicTable from "./components/table/basic/BasicTable";
+// import SortingTable from "./components/table/sorting/SortingTable";
+import FilteringTable from "./components/table/filter/FilteringTable";
 
 function App() {
   return (

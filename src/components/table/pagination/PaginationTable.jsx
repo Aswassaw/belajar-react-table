@@ -1,12 +1,12 @@
-import "./table.css";
+import "../../table.css";
 import React, { Fragment, useMemo } from "react";
 import { useTable, useSortBy, useGlobalFilter, useFilters } from "react-table";
-import MOCK_DATA from "./MOCK_DATA.json";
-import { COLUMNS } from "./columns";
+import MOCK_DATA from "../../MOCK_DATA.json";
+import { COLUMNS } from "../../columns";
 import { GlobalFilter } from "./GlobalFilter";
 import { ColumnFilter } from "./ColumnFilter";
 
-const FilteringTable = () => {
+const PaginationTable = () => {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
   const defaultColumn = useMemo(
@@ -100,22 +100,10 @@ const FilteringTable = () => {
               );
             })}
           </tbody>
-          {/* Tfoot */}
-          <tfoot>
-            {footerGroups.map((footerGroup) => (
-              <tr {...footerGroup.getFooterGroupProps()}>
-                {footerGroup.headers.map((column) => (
-                  <td {...column.getFooterProps()}>
-                    {column.render("Footer")}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tfoot>
         </table>
       </div>
     </>
   );
 };
 
-export default FilteringTable;
+export default PaginationTable;
