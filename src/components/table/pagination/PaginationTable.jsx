@@ -1,8 +1,14 @@
 import "../../table.css";
 import React, { Fragment, useMemo } from "react";
-import { useTable, useSortBy, useGlobalFilter, useFilters } from "react-table";
+import {
+  useTable,
+  useSortBy,
+  useGlobalFilter,
+  useFilters,
+  usePagination,
+} from "react-table";
 import MOCK_DATA from "../../MOCK_DATA.json";
-import { COLUMNS, GROUP_COLUMS } from "../../columns";
+import { COLUMNS } from "../../columns";
 import { GlobalFilter } from "./GlobalFilter";
 import { ColumnFilter } from "./ColumnFilter";
 
@@ -20,8 +26,12 @@ const FilteringTable = () => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    footerGroups,
-    rows,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
     prepareRow,
     state,
     setGlobalFilter,
@@ -33,10 +43,11 @@ const FilteringTable = () => {
     },
     useFilters,
     useGlobalFilter,
-    useSortBy
+    useSortBy,
+    usePagination
   );
 
-  const { globalFilter } = state;
+  const { globalFilter, pageIndex } = state;
 
   return (
     <>
@@ -87,7 +98,7 @@ const FilteringTable = () => {
           </thead>
           {/* Tbody */}
           <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {page.map((row) => {
               prepareRow(row);
 
               return (
@@ -100,19 +111,29 @@ const FilteringTable = () => {
               );
             })}
           </tbody>
-          {/* Tfoot */}
-          <tfoot>
-            {footerGroups.map((footerGroup) => (
-              <tr {...footerGroup.getFooterGroupProps()}>
-                {footerGroup.headers.map((column) => (
-                  <td {...column.getFooterProps()}>
-                    {column.render("Footer")}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tfoot>
         </table>
+        <div style={{ marginTop: "5px" }}>
+          <p>
+            Page{" "}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>
+          </p>
+        </div>
+        <button
+          className='button'
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+        >
+          Previous
+        </button>
+        <button
+          className='button'
+          onClick={() => nextPage()}
+          disabled={!canNextPage}
+        >
+          Next
+        </button>
       </div>
     </>
   );
