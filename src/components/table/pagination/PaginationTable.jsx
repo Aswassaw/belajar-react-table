@@ -34,9 +34,10 @@ const FilteringTable = () => {
     pageOptions,
     gotoPage,
     pageCount,
-    prepareRow,
+    setPageSize,
     state,
     setGlobalFilter,
+    prepareRow,
   } = useTable(
     {
       columns,
@@ -49,7 +50,7 @@ const FilteringTable = () => {
     usePagination
   );
 
-  const { globalFilter, pageIndex } = state;
+  const { globalFilter, pageIndex, pageSize } = state;
 
   return (
     <>
@@ -114,27 +115,38 @@ const FilteringTable = () => {
             })}
           </tbody>
         </table>
-        <div style={{marginTop: "5px"}}>
-        <span>
+        <div style={{ marginTop: "5px" }}>
+          <span>
             Page{" "}
             <strong>
               {pageIndex + 1} of {pageOptions.length}
             </strong>
-        </span>
-        <span>
-          {" "} | Go to page:{" "}
-          <input
-            style={{ width: "50px" }}
-            type='number'
-            defaultValue={pageIndex + 1}
-            onChange={(e) => {
-              const pageNumber = e.target.value
-                ? Number(e.target.value) - 1
-                : 0;
-              gotoPage(pageNumber);
-            }}
-          />
-        </span>
+          </span>
+          <span>
+            {" "}
+            | Go to page:{" "}
+            <input
+              style={{ width: "50px" }}
+              type='number'
+              defaultValue={pageIndex + 1}
+              onChange={(e) => {
+                const pageNumber = e.target.value
+                  ? Number(e.target.value) - 1
+                  : 0;
+                gotoPage(pageNumber);
+              }}
+            />
+          </span>
+          <select
+            value={pageSize}
+            onChange={(e) => setPageSize(Number(e.target.value))}
+          >
+            {[10, 50, 100].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
         </div>
         <br />
         <button
