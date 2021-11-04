@@ -43,6 +43,8 @@ const SelectingRows = () => {
     setGlobalFilter,
     prepareRow,
     selectedFlatRows,
+    allColumns,
+    getToggleHideAllColumnsProps,
   } = useTable(
     {
       columns,
@@ -91,6 +93,25 @@ const SelectingRows = () => {
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       <div>
         <button onClick={changeOrder}>Change Column Order</button>
+        <br />
+
+        <div>
+          <div>
+            <Checkbox {...getToggleHideAllColumnsProps()} /> Toggle All
+          </div>
+          {allColumns.map((column) => (
+            <span key={column.id}>
+              {column.id === "selection" || column.id === "no" ? (
+                ""
+              ) : (
+                <label>
+                  <input type='checkbox' {...column.getToggleHiddenProps()} />
+                  {column.Header}
+                </label>
+              )}
+            </span>
+          ))}
+        </div>
         <br />
 
         {/* Table */}
