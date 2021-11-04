@@ -6,6 +6,7 @@ export const COLUMNS = [
     Cell: (row) => {
         return <div>{parseInt(row.row.id) + 1}</div>;
     },
+    accessor: "no",
     disableSortBy: true,
     disableFilters: true,
     disableGlobalFilter: true,

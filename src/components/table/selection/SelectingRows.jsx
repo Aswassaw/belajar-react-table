@@ -7,6 +7,7 @@ import {
   useFilters,
   usePagination,
   useRowSelect,
+  useColumnOrder,
 } from "react-table";
 import MOCK_DATA from "../../MOCK_DATA.json";
 import { COLUMNS } from "../../columns";
@@ -29,6 +30,7 @@ const SelectingRows = () => {
     getTableBodyProps,
     headerGroups,
     page,
+    setColumnOrder,
     nextPage,
     previousPage,
     canNextPage,
@@ -50,6 +52,7 @@ const SelectingRows = () => {
     useFilters,
     useGlobalFilter,
     useSortBy,
+    useColumnOrder,
     usePagination,
     useRowSelect,
     (hooks) => {
@@ -70,12 +73,26 @@ const SelectingRows = () => {
     }
   );
 
+  const changeOrder = () => {
+    setColumnOrder([
+      "no",
+      "first_name",
+      "last_name",
+      "phone",
+      "country",
+      "date_of_birth",
+    ]);
+  };
+
   const { globalFilter, pageIndex, pageSize } = state;
 
   return (
     <>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       <div>
+        <button onClick={changeOrder}>Change Column Order</button>
+        <br />
+
         {/* Table */}
         <table {...getTableProps()}>
           {/* Thead */}
@@ -206,7 +223,9 @@ const SelectingRows = () => {
             {JSON.stringify(
               {
                 countSelected: selectedFlatRows.length,
-                selectedFlatRows: selectedFlatRows.map((row) => row.original.id),
+                selectedFlatRows: selectedFlatRows.map(
+                  (row) => row.original.id
+                ),
               },
               null,
               2
